@@ -41,7 +41,7 @@ return [
         
         // using closures:
         /*'default' => static function (SlugsInterface $slugs): SlugifierInterface|SlugifierFactoryInterface {
-            return new SlugifierFactory(slugs: slugs);
+            return new SlugifierFactory(slugs: $slugs);
             // return new Slugifier(...);
         },*/
     ],
