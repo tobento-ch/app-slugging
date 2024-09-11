@@ -74,4 +74,19 @@ class LazySlugifiers extends Slugifiers
         $this->slugifiers[$name] = $this->autowire->call($this->slugifiers[$name], ['name' => $name]);
         return $this->get($name);
     }
+    
+    /**
+     * Returns the fallback slugifier.
+     *
+     * @param string $name
+     * @return SlugifierInterface
+     */
+    protected function getFallbackSlugifier(string $name): SlugifierInterface
+    {
+        if (!is_null($firstKey = array_key_first($this->slugifiers))) {
+            return $this->slugifiers[$name] = $this->get($firstKey);
+        }
+        
+        return parent::getFallbackSlugifier($name);
+    }
 }
