@@ -54,9 +54,19 @@ class LazySlugifiersTest extends TestCase
         $slugifiers = new LazySlugifiers(new Container());
         $slugifier = (new SlugifierFactory())->createSlugifier();
         $slugifiers->add(name: 'foo', slugifier: $slugifier);
+        $slugifiers->add(name: 'bar', slugifier: (new SlugifierFactory())->createSlugifier());
         
         $this->assertSame($slugifier, $slugifiers->get('foo'));
         $this->assertFalse($slugifiers->get('foo') === $slugifiers->get('bar'));
+    }
+    
+    public function testGetMethodFallsbackToFirstIfExists()
+    {
+        $slugifiers = new LazySlugifiers(new Container());
+        $slugifier = (new SlugifierFactory())->createSlugifier();
+        $slugifiers->add(name: 'first', slugifier: $slugifier);
+        
+        $this->assertSame($slugifier, $slugifiers->get('bar'));
     }
     
     public function testGetMethodThrowsExceptionIfInvalidSlugifierPassed()
