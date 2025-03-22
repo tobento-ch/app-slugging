@@ -67,8 +67,13 @@ class SlugMatches
             $requestParams = $route->getParameter('request_parameters', []);
             $requestParams[$this->withUriId] = $slug->resourceId() ?: 0;
             unset($requestParams[$this->uriSlugName]);
-            $route->parameter('request_parameters', $requestParams);            
+            $route->parameter('request_parameters', $requestParams);
         }
+        
+        $route->parameter('slug.slug', $slug->slug());
+        $route->parameter('slug.locale', $slug->locale());
+        $route->parameter('slug.resourceId', $slug->resourceId());
+        $route->parameter('slug.resourceKey', $slug->resourceKey());
 
         return $route;
     }
