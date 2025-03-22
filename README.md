@@ -16,7 +16,6 @@ Slugging support for the app using the [Slugifier Service](https://github.com/to
     - [Slug Repository](#slug-repository)
     - [Routing](#routing)
         - [Slug Matches](#slug-matches)
-    - [Slug Route Matcher](#slug-matches)
     - [Unique Slug Validation Rule](#unique-slug-validation-rule)
 - [Credits](#credits)
 ___
@@ -306,6 +305,21 @@ $app->route(
     resourceKey: 'blog',
     uriSlugName: 'alias',
 ));
+```
+
+**Route Parameters**
+
+The following route parameters will be added if a slug matches:
+
+```php
+use Tobento\Service\Routing\RouterInterface;
+
+$route = $app->get(RouterInterface::class)->getMatchedRoute();
+
+$slug = $route->getParameter('slug.slug'); // string
+$locale = $route->getParameter('slug.locale'); // string
+$resourceId = $route->getParameter('slug.resourceId'); // null|string
+$resourceKey = $route->getParameter('slug.resourceKey'); // null|string|int
 ```
 
 ## Unique Slug Validation Rule
