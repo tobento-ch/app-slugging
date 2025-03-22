@@ -228,4 +228,37 @@ class SluggingTest extends \Tobento\App\Testing\TestCase
         
         $this->assertSame('ueber-uns-1', $slugifier->slugify(string: 'über uns', locale: 'de-CH'));
     }
+    
+    public function testRouteMatchesAddsSlugToRouteParameters()
+    {
+        $booting = function ($app) {
+            $app->on(SlugsInterface::class, function (SlugsInterface $slugs): void {
+                $slugs->addResource(new ArrayResource(
+                    slugs: ['about-cars'],
+                    key: 'blog',
+                ));
+            });
+
+            $app->on(RouterInterface::class, function (RouterInterface $router): void {
+                $router->get(
+                    uri: '{slug}',
+                    handler: function (string $id, RouterInterface $router) {
+                        $route = $router->getMatchedRoute();
+                        return ['resource' => 'blog', 'id' => $id];
+                    },
+                )->matches(new SlugMatches(resourceKey: 'blog', withUriId: 'id'));
+            });
+        };
+        
+        $http = $this->fakeHttp();
+        $http->request(method: 'GET', uri: 'about-cars');
+        $booting($this->getApp());
+        $http->response()->assertStatus(200)->assertBodySame('{"resource":"blog","id":"0"}');
+        
+        $route = $this->getApp()->get(RouterInterface::class)->getMatchedRoute();
+        $this->assertSame('about-cars', $route->getParameter('slug.slug'));
+        $this->assertSame('', $route->getParameter('slug.locale'));
+        $this->assertSame(null, $route->getParameter('slug.resourceId'));
+        $this->assertSame('blog', $route->getParameter('slug.resourceKey'));
+    }
 }
