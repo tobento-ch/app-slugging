@@ -30,7 +30,7 @@ class SlugStorageRepository extends StorageRepository implements SlugRepositoryI
     {
         return [
             Column\Id::new(),
-            Column\Text::new('slug'),
+            Column\Text::new('slug')->type(index: ['name' => 'slug', 'column' => 'slug']),
             Column\Text::new('locale', type: 'char')->type(length: 5),
             Column\Text::new('resource_key'),
             Column\Text::new('resource_id'),
