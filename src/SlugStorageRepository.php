@@ -29,11 +29,11 @@ class SlugStorageRepository extends StorageRepository implements SlugRepositoryI
     protected function configureColumns(): iterable|ColumnsInterface
     {
         return [
-            Column\Id::new(),
-            Column\Text::new('slug')->type(index: ['name' => 'slug', 'column' => 'slug']),
-            Column\Text::new('locale', type: 'char')->type(length: 5),
-            Column\Text::new('resource_key'),
-            Column\Text::new('resource_id'),
+            new Column\Id(),
+            new Column\Text('slug')->type(index: ['name' => 'slug', 'column' => 'slug']),
+            new Column\Text(name: 'locale', type: 'char')->type(length: 5),
+            new Column\Text('resource_key'),
+            new Column\Text('resource_id'),
         ];
     }
     
