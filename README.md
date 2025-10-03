@@ -30,7 +30,7 @@ composer require tobento/app-slugging
 
 ## Requirements
 
-- PHP 8.0 or greater
+- PHP 8.4 or greater
 
 # Documentation
 
@@ -56,7 +56,7 @@ use Tobento\Service\Slugifier\SlugifiersInterface;
 use Tobento\Service\Slugifier\SlugsInterface;
 
 // Create the app
-$app = (new AppFactory())->createApp();
+$app = new AppFactory()->createApp();
 
 // Add directories:
 $app->dirs()
@@ -338,7 +338,7 @@ Do not forget to boot the validator:
 use Tobento\App\AppFactory;
 
 // Create the app
-$app = (new AppFactory())->createApp();
+$app = new AppFactory()->createApp();
 
 // Adding boots
 $app->boot(\Tobento\App\Validation\Boot\Validator::class);
