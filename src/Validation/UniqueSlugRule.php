@@ -73,22 +73,6 @@ class UniqueSlugRule extends Rule implements AutowireAware, ValidationAware
     }
     
     /**
-     * Create a new instance.
-     *
-     * @param null|string $locale
-     * @param null|bool|callable $skipValidation
-     * @param null|string $errorMessage
-     * @return static
-     */
-    public static function new(
-        null|string $locale = null,
-        $skipValidation = null,
-        null|string $errorMessage = null,
-    ): static {
-        return new static($locale, $skipValidation, $errorMessage);
-    }
-    
-    /**
      * Skips validation depending on value and rule method.
      * 
      * @param mixed $value The value to validate.
